@@ -75,7 +75,7 @@ class ViewController: UIViewController, UITextFieldDelegate  {
             
           // player one is putting in the word that player two is guessing
         case .word:
-            textField.backgroundColor = .green
+            textField.backgroundColor = .yellow
             headingLabel.text = "Player 2's turn"
             textfieldLabel.text = "Guess letter:"
             textField.isSecureTextEntry = false
@@ -106,8 +106,8 @@ class ViewController: UIViewController, UITextFieldDelegate  {
             turnPlay -= 1
             print(turnPlay)
             turnsLeftLabel.text = "Turns left: \(turnPlay)"
-                if turnPlay > 2 {
-                    textField.backgroundColor = .yellow
+                if turnPlay > 2 && turnPlay < 5{
+                    textField.backgroundColor = .orange
                 }
                 if turnPlay <= 2{
                     textField.backgroundColor = .red
@@ -126,6 +126,7 @@ class ViewController: UIViewController, UITextFieldDelegate  {
                 if turnPlay == 1{hangmanView.image = #imageLiteral(resourceName: "mufasa near death")
                 }
                 if turnPlay == 0{hangmanView.image = #imageLiteral(resourceName: "mufasa game over")
+                    textField.isEnabled = false
                 }
     }
             print(wordArray)
