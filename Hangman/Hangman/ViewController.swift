@@ -8,20 +8,37 @@
 
 import UIKit
 
-class ViewController: UIViewController, UITextFieldDelegate {
+class ViewController: UIViewController, UITextFieldDelegate  {
 
     @IBOutlet weak var hintLabel: UILabel!
     @IBOutlet weak var myTextField: UITextField!
-    @IBOutlet weak var hangmanView: UIView!
+
+    
+    @IBOutlet weak var turnsLeftLabel: UILabel!
+    
+    
+    @IBOutlet weak var hangmanView: UIImageView!
     @IBOutlet weak var headingLabel: UILabel!
     @IBOutlet weak var textfieldLabel: UILabel!
     
-    var turnPlay = 0
+    @IBOutlet weak var privateWordSpaces: UILabel!
     
+    
+    
+    var turnPlay = 6
+    
+    
+    var randomWord = ""
+    var guess: String = ""
     var status:GameStatus = .hint
+    var randomWordString = ""
+    
+    var wordArray = [String]()
     
   override func viewDidLoad() {
     super.viewDidLoad()
+    
+    
     myTextField.delegate = self
     hintLabel.text = ""
     headingLabel.text = "Player 1's turn"
@@ -30,7 +47,7 @@ class ViewController: UIViewController, UITextFieldDelegate {
     //let textField = UITextField()
     //textField.isSecureTextEntry = true // secure text
   }
-    
+    // this limits player to input one letter at the time
     func textField(_ textField: UITextField, shouldChangeCharactersIn range: NSRange, replacementString string: String) -> Bool {
         if status == GameStatus.game {
         let strCount = string.count
@@ -42,7 +59,7 @@ class ViewController: UIViewController, UITextFieldDelegate {
         }
         return true
     }
-    
+    // first thing thats happening in the game
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {
         textField.resignFirstResponder()
         switch status {
@@ -52,13 +69,39 @@ class ViewController: UIViewController, UITextFieldDelegate {
             status = .word
             textfieldLabel.text = "Enter word:"
             textField.isSecureTextEntry = true
+            randomWord = textField.text ?? ""
+            
+          // player one is putting in the word that player two is guessing
         case .word:
-            textfieldLabel.text = "Guess letter"
+            headingLabel.text = "Player 2's turn"
+            textfieldLabel.text = "Guess letter:"
             textField.isSecureTextEntry = false
             status = .game
+            randomWord = textField.text ?? ""
+            randomWordString = textField.text ?? ""
+            print(randomWord)
+            let randomWordCount = textField.text?.count
+            wordArray = [String](repeating: "_ ", count: randomWordCount ?? 1)
+            print(wordArray)
+            privateWordSpaces.text = wordArray.joined(separator: "")
+            turnsLeftLabel.text = "Turns left: \(turnPlay)"
             
         case .game:
-            
+            guess = textField.text ?? ""
+            if randomWord.contains(guess){
+                // is comparing and checking if the guess letter is in the word
+                for (index, character) in randomWord.enumerated() {
+                if character == Character(guess){
+                    wordArray[index] = String(character)
+                    privateWordSpaces.text = wordArray.joined(separator: "")
+                    //.joined all the underspaced
+                    //separator , separates them by space
+                    //
+                }
+            }
+        }
+            print(wordArray)
+            print(guess)
             print("game")
         }
         myTextField.text = ""
