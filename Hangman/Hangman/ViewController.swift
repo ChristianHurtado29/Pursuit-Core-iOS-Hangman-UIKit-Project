@@ -17,6 +17,8 @@ class ViewController: UIViewController, UITextFieldDelegate  {
     @IBOutlet weak var turnsLeftLabel: UILabel!
     
     
+    @IBOutlet weak var backgroundView: UIImageView!
+    
     @IBOutlet weak var hangmanView: UIImageView!
     @IBOutlet weak var headingLabel: UILabel!
     @IBOutlet weak var textfieldLabel: UILabel!
