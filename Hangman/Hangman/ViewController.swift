@@ -73,6 +73,7 @@ class ViewController: UIViewController, UITextFieldDelegate  {
             
           // player one is putting in the word that player two is guessing
         case .word:
+            textField.backgroundColor = .green
             headingLabel.text = "Player 2's turn"
             textfieldLabel.text = "Guess letter:"
             textField.isSecureTextEntry = false
@@ -85,6 +86,7 @@ class ViewController: UIViewController, UITextFieldDelegate  {
             print(wordArray)
             privateWordSpaces.text = wordArray.joined(separator: "")
             turnsLeftLabel.text = "Turns left: \(turnPlay)"
+            hangmanView.image = #imageLiteral(resourceName: "mufasa happy")
             
         case .game:
             guess = textField.text ?? ""
@@ -96,10 +98,34 @@ class ViewController: UIViewController, UITextFieldDelegate  {
                     privateWordSpaces.text = wordArray.joined(separator: "")
                     //.joined all the underspaced
                     //separator , separates them by space
-                    //
                 }
-            }
-        }
+                }
+        }  else {
+            turnPlay -= 1
+            print(turnPlay)
+            turnsLeftLabel.text = "Turns left: \(turnPlay)"
+                if turnPlay > 2 {
+                    textField.backgroundColor = .yellow
+                }
+                if turnPlay <= 2{
+                    textField.backgroundColor = .red
+                }
+                
+                if turnPlay == 6{hangmanView.image = #imageLiteral(resourceName: "mufasa happy")
+                }
+                if turnPlay == 5{hangmanView.image = #imageLiteral(resourceName: "scarlook")
+                }
+                if turnPlay == 4{hangmanView.image = #imageLiteral(resourceName: "zazu look")
+                }
+                if turnPlay == 3{hangmanView.image = #imageLiteral(resourceName: "mufasa scared")
+                }
+                if turnPlay == 2{hangmanView.image = #imageLiteral(resourceName: "mufasa hanging")
+                }
+                if turnPlay == 1{hangmanView.image = #imageLiteral(resourceName: "mufasa near death")
+                }
+                if turnPlay == 0{hangmanView.image = #imageLiteral(resourceName: "mufasa game over")
+                }
+    }
             print(wordArray)
             print(guess)
             print("game")
