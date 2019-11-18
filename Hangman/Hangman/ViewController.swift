@@ -9,10 +9,10 @@
 import UIKit
 
 class ViewController: UIViewController, UITextFieldDelegate  {
-
+    
     @IBOutlet weak var hintLabel: UILabel!
     @IBOutlet weak var myTextField: UITextField!
-
+    
     
     @IBOutlet weak var turnsLeftLabel: UILabel!
     
@@ -29,7 +29,7 @@ class ViewController: UIViewController, UITextFieldDelegate  {
     @IBOutlet weak var privateWordSpaces: UILabel!
     
     var turnPlay = 6
-
+    
     var randomWord = ""
     var guess: String = ""
     var status:GameStatus = .hint
@@ -37,30 +37,28 @@ class ViewController: UIViewController, UITextFieldDelegate  {
     
     var wordArray = [String]()
     
-  override func viewDidLoad() {
-    super.viewDidLoad()
-    
-    hangmanView.image = #imageLiteral(resourceName: "lionkingintro")
-    myTextField.delegate = self
-    hintLabel.text = ""
-    headingLabel.text = "Player 1's turn"
-    textfieldLabel.text = "Enter hint: "
-    newGameButt.isHidden = true
-    
-    
-    
-    //let textField = UITextField()
-    //textField.isSecureTextEntry = true // secure text
-  }
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        
+        hangmanView.image = #imageLiteral(resourceName: "lionkingintro")
+        myTextField.delegate = self
+        hintLabel.text = ""
+        headingLabel.text = "Player 1's turn"
+        textfieldLabel.text = "Enter hint: "
+        newGameButt.isHidden = true
+        
+        //let textField = UITextField()
+        //textField.isSecureTextEntry = true // secure text
+    }
     // this limits player to input one letter at the time
     func textField(_ textField: UITextField, shouldChangeCharactersIn range: NSRange, replacementString string: String) -> Bool {
         if status == GameStatus.game {
-        let strCount = string.count
-        let textCount = textField.text?.count ?? 0
-        if strCount + textCount > 1 {
-            return false
-        }
-        return true
+            let strCount = string.count
+            let textCount = textField.text?.count ?? 0
+            if strCount + textCount > 1 {
+                return false
+            }
+            return true
         }
         return true
     }
@@ -77,7 +75,7 @@ class ViewController: UIViewController, UITextFieldDelegate  {
             textField.isSecureTextEntry = true
             randomWord = textField.text ?? ""
             
-          // player one is putting in the word that player two is guessing
+        // player one is putting in the word that player two is guessing
         case .word:
             textField.backgroundColor = .yellow
             headingLabel.text = "Player 2's turn"
@@ -103,28 +101,29 @@ class ViewController: UIViewController, UITextFieldDelegate  {
             if randomWord.contains(guess){
                 // is comparing and checking if the guess letter is in the word
                 for (index, character) in randomWord.enumerated() {
-                if character == Character(guess){
-                    wordArray[index] = String(character)
-                    privateWordSpaces.text = wordArray.joined(separator: "")
-                    //.joined all the underspaced
-                    //separator , separates them by space
-                }
+                    if character == Character(guess){
+                        wordArray[index] = String(character)
+                        privateWordSpaces.text = wordArray.joined(separator: "")
+                        //.joined all the underspaced
+                        //separator , separates them by space
+                    }
                 }
                 if randomWord == wordArray.joined(){
-                                   hangmanView.image = #imageLiteral(resourceName: "lion king hakuna")
-                                   print("woo!")
-                               }
-        }  else {
-            turnPlay -= 1
-            print(turnPlay)
-            turnsLeftLabel.text = "Turns left: \(turnPlay)"
+                    hangmanView.image = #imageLiteral(resourceName: "lion king hakuna")
+                    print("woo!")
+                    newGameButt.isHidden = false
+                    textField.isHidden = true
+                }
+            }  else {
+                turnPlay -= 1
+                print(turnPlay)
+                turnsLeftLabel.text = "Turns left: \(turnPlay)"
                 if turnPlay > 2 && turnPlay < 5{
                     textField.backgroundColor = .orange
                 }
                 if turnPlay <= 2{
                     textField.backgroundColor = .red
                 }
-                
                 if turnPlay == 6{hangmanView.image = #imageLiteral(resourceName: "mufasa happy")
                 }
                 if turnPlay == 5{hangmanView.image = #imageLiteral(resourceName: "scarlook")
@@ -142,8 +141,7 @@ class ViewController: UIViewController, UITextFieldDelegate  {
                     textField.isHidden = true
                     newGameButt.isHidden = false
                 }
-               
-    }
+            }
             print(wordArray)
             print(wordArray.joined())
             print(guess)
@@ -151,8 +149,7 @@ class ViewController: UIViewController, UITextFieldDelegate  {
         myTextField.text = ""
         return true
     }
-
-
+    
     @IBAction func newGameButton(_ sender: UIButton) {
         hangmanView.image = #imageLiteral(resourceName: "lionkingintro")
         myTextField.delegate = self
@@ -171,4 +168,3 @@ class ViewController: UIViewController, UITextFieldDelegate  {
         myTextField.backgroundColor = .yellow
     }
 }
-
