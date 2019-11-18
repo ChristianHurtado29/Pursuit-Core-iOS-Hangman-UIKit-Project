@@ -23,7 +23,7 @@
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="heading Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="XlY-kO-DXy">
                                 <rect key="frame" x="20" y="59" width="184" height="64"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <fontDescription key="fontDescription" type="system" pointSize="22"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="29"/>
                                 <color key="textColor" systemColor="systemOrangeColor" red="1" green="0.58431372550000005" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <nil key="highlightedColor"/>
                             </label>
@@ -74,6 +74,9 @@
                                 <state key="normal" title="New Game">
                                     <color key="titleColor" systemColor="systemYellowColor" red="1" green="0.80000000000000004" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 </state>
+                                <connections>
+                                    <action selector="newGameButton:" destination="BYZ-38-t0r" eventType="touchUpInside" id="0zS-6T-Upr"/>
+                                </connections>
                             </button>
                         </subviews>
                         <color key="backgroundColor" systemColor="systemIndigoColor" red="0.34509803919999998" green="0.33725490200000002" blue="0.83921568629999999" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
@@ -85,6 +88,7 @@
                         <outlet property="headingLabel" destination="XlY-kO-DXy" id="gLe-09-FNt"/>
                         <outlet property="hintLabel" destination="1em-xt-j5U" id="1KN-YG-8da"/>
                         <outlet property="myTextField" destination="ePo-cm-hhg" id="doD-tb-F3u"/>
+                        <outlet property="newGameButt" destination="I3P-pI-4d2" id="3CO-8P-oT2"/>
                         <outlet property="privateWordSpaces" destination="Lf9-cP-OA7" id="fid-g2-aNV"/>
                         <outlet property="textfieldLabel" destination="NYA-Rm-KcA" id="QQg-Wb-fkL"/>
                         <outlet property="turnsLeftLabel" destination="sI3-qE-RLu" id="9Ac-pw-fUI"/>

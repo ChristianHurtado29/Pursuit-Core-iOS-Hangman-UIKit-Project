@@ -17,6 +17,9 @@ class ViewController: UIViewController, UITextFieldDelegate  {
     @IBOutlet weak var turnsLeftLabel: UILabel!
     
     
+    @IBOutlet weak var newGameButt: UIButton!
+    
+    
     @IBOutlet weak var backgroundView: UIImageView!
     
     @IBOutlet weak var hangmanView: UIImageView!
@@ -25,11 +28,8 @@ class ViewController: UIViewController, UITextFieldDelegate  {
     
     @IBOutlet weak var privateWordSpaces: UILabel!
     
-    
-    
     var turnPlay = 6
-    
-    
+
     var randomWord = ""
     var guess: String = ""
     var status:GameStatus = .hint
@@ -40,11 +40,14 @@ class ViewController: UIViewController, UITextFieldDelegate  {
   override func viewDidLoad() {
     super.viewDidLoad()
     
-    
+    hangmanView.image = #imageLiteral(resourceName: "lionkingintro")
     myTextField.delegate = self
     hintLabel.text = ""
     headingLabel.text = "Player 1's turn"
     textfieldLabel.text = "Enter hint: "
+    newGameButt.isHidden = true
+    
+    
     
     //let textField = UITextField()
     //textField.isSecureTextEntry = true // secure text
@@ -66,6 +69,7 @@ class ViewController: UIViewController, UITextFieldDelegate  {
         textField.resignFirstResponder()
         switch status {
         case .hint:
+            
             hintLabel.text = "Hint: \(myTextField.text ?? "")"
             myTextField.text = ""
             status = .word
@@ -84,6 +88,8 @@ class ViewController: UIViewController, UITextFieldDelegate  {
             randomWordString = textField.text ?? ""
             print(randomWord)
             let randomWordCount = textField.text?.count
+            
+            //
             wordArray = [String](repeating: "_ ", count: randomWordCount ?? 1)
             print(wordArray)
             privateWordSpaces.text = wordArray.joined(separator: "")
@@ -92,6 +98,8 @@ class ViewController: UIViewController, UITextFieldDelegate  {
             
         case .game:
             guess = textField.text ?? ""
+            
+            
             if randomWord.contains(guess){
                 // is comparing and checking if the guess letter is in the word
                 for (index, character) in randomWord.enumerated() {
@@ -102,6 +110,10 @@ class ViewController: UIViewController, UITextFieldDelegate  {
                     //separator , separates them by space
                 }
                 }
+                if randomWord == wordArray.joined(){
+                                   hangmanView.image = #imageLiteral(resourceName: "lion king hakuna")
+                                   print("woo!")
+                               }
         }  else {
             turnPlay -= 1
             print(turnPlay)
@@ -127,17 +139,36 @@ class ViewController: UIViewController, UITextFieldDelegate  {
                 }
                 if turnPlay == 0{hangmanView.image = #imageLiteral(resourceName: "mufasa game over")
                     textField.isEnabled = false
+                    textField.isHidden = true
+                    newGameButt.isHidden = false
                 }
+               
     }
             print(wordArray)
+            print(wordArray.joined())
             print(guess)
-            print("game")
         }
         myTextField.text = ""
         return true
     }
 
 
-
+    @IBAction func newGameButton(_ sender: UIButton) {
+        hangmanView.image = #imageLiteral(resourceName: "lionkingintro")
+        myTextField.delegate = self
+        hintLabel.text = ""
+        headingLabel.text = "Player 1's turn"
+        textfieldLabel.text = "Enter hint: "
+        newGameButt.isHidden = true
+        turnPlay = 6
+        randomWord = ""
+        guess = ""
+        status = .hint
+        randomWordString = ""
+        wordArray = [String]()
+        myTextField.isHidden = false
+        myTextField.isEnabled = true
+        myTextField.backgroundColor = .yellow
+    }
 }
 
